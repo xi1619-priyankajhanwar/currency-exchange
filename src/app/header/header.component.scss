@@ -1,0 +1,30 @@
+$color-black: #000000;
+$color-white: #ffffff;
+
+.header-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 15px;
+  border: 1px solid $color-black;
+  .logo{
+    margin: 25px 0px;
+    cursor: pointer;
+  }
+  .conversion-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 25px 0px;
+  }
+  .buttons{
+    min-width: 80px;
+    background-color: $color-black;
+    border: 1px solid $color-black;
+    color: $color-white;
+    margin: 0 5px;
+    font-size:12px;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
