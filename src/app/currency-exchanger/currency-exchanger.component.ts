@@ -36,6 +36,7 @@ export class CurrencyExchangerComponent implements OnInit {
       const fromCurrency = value.fromCurrency;
       this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
       this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
+      this.currencyExchangerService.sendUpdatedCurrency(data);
     });
   }
 
