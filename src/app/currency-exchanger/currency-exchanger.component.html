@@ -1,0 +1,36 @@
+
+<div class="currency-exchanger-container">
+    <form [formGroup]="currencyExchangeForm" (ngSubmit)="onConvert()">
+        <div class="currency-exchanger">
+            <div class="currency-exchanger-panel">
+                <div class="input-containers">
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" pattern="^[1-9]+[0-9]*" formControlName="amount">
+                </div>
+                <div class="input-containers">
+                    <label for="fromCurrency">From</label>
+                    <select id="from-currencies" formControlName="fromCurrency">
+                        <option *ngFor="let currency of currencyList" [value]="currency"  [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
+                    </select>
+                </div>
+                <img class="swapper" src="../../../assets/images/swap.png" height="30px" width="30px" alt="swap-icon" (click)="onSwapCurrency()"/>
+                <div class="input-containers">
+                    <label for="toCurrency">To</label>
+                    <select id="to-currencies" formControlName="toCurrency">
+                        <option *ngFor="let currency of currencyList" [value]="currency" [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
+                    </select>
+                </div>
+            </div>
+            <ng-container *ngIf="currencyExchangeForm.status === 'VALID' && conversionAmount!==null">
+                <div class="conversionUnits">{{currencyExchangeForm.value.amount}} {{currencyExchangeForm.value.fromCurrency}} = {{conversionAmount}} {{currencyExchangeForm.value.toCurrency}}</div>
+                <div class="valueOfUnit"> 1 {{currencyExchangeForm.value.fromCurrency}}  = {{valueOfUnit}} {{currencyExchangeForm.value.toCurrency}} </div>
+            </ng-container>
+            <div class="button-container">
+                <button type="submit" class="convert-btn btn-align" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}">Convert</button>
+                <button class="convert-btn" type="button" 
+                (click)="onMoreDetails()" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}">More details</button>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,116 @@
+.currency-exchanger-container{
+    background-color: #ffffff;
+    border-radius: 25px;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 25px;
+    .currency-exchanger{
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+        label{
+            font-weight: 600;
+            line-height: 24px;
+        }
+        .input-containers{
+            display: flex;
+            flex-direction: column;
+        }
+        .disabled{
+            background-color: gray;
+        }
+        input{
+            font-size: 16px;
+            padding: 10px;
+            font-weight: 300;
+        }
+        select{
+            font-size: 16px;
+            padding: 10px;
+            font-weight: 300;
+        }
+        .convert-btn{
+            color:#ffffff;
+            background-color: black;
+            border-radius: 4px;
+            cursor: pointer;
+            height: 40px;
+            min-width: 150px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+        .valueOfUnit{
+            color: rgb(92, 102, 123);
+        }
+        .conversionUnits{
+            color: rgb(46, 60, 87);
+            text-transform: bold;
+            font-weight: 600;
+            font-size: 24px;
+            margin-top: 10px;
+            padding: 25px 0;
+        }
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
+    .currency-exchanger-panel{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .swapper{
+        margin: 10px;
+    }
+    input{
+        min-width: 200px;
+        height: 25px;
+    }
+    select{
+        min-width: 200px;
+        height: 50px;
+    }
+    .convert-btn{
+        color:#ffffff;
+        background-color: black;
+        border-radius: 4px;
+        cursor: pointer;
+        height: 40px;
+        min-width: 150px;
+        border: 1px solid black;
+        margin-top: 10px;
+    }
+    .button-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin: 25px 0px;
+    }
+    .btn-align{
+        margin-right: 10px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .currency-exchanger-panel{
+        display: flex;
+        flex-direction: column;
+    }
+    .swapper{
+        transform:rotate(90deg);
+        margin: 20px auto 0px;
+    }
+    .input-containers{
+        margin-top: 10px;
+    }
+    .button-container{
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    .btn-align{
+        margin-right: 0px;
+    }
+}
