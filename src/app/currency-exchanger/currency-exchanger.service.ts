@@ -11,15 +11,23 @@ export class CurrencyExchangerService {
   constructor(private http: HttpClient) { }
 
   ACCESS_KEY = '09ac9b62827e512d92d1108a1c75126e';
-
+  currencyList:any;
   getCurrencies(){
     const currencyUrl = 'https://openexchangerates.org/api/currencies.json';
     return this.http.get(currencyUrl);
   }
 
   getConversion(value:Exchange){
-    const currencyUrl='http://data.fixer.io/api/latest?access_key='+this.ACCESS_KEY+'&symbols='+value.fromCurrency+','+value.toCurrency+',USD,GBP,PLN,MXN&format=1'
+    const currencyUrl='http://data.fixer.io/api/latest?access_key='+this.ACCESS_KEY+'&symbols='+value.fromCurrency+','+value.toCurrency+',QAR,GBP,PLN,MXN,INR,AED,JPY&format=1'
     return this.http.get(currencyUrl);
+  }
+
+  getCurrencyName(currencyCode:string){
+    return this.currencyList[currencyCode];
+  }
+
+  setCurrencyList(list:Object){
+    this.currencyList = list;
   }
 
   sendUpdatedCurrency(message: string) {

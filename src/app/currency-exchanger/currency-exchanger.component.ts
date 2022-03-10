@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CurrencyExchangerService } from './currency-exchanger.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Exchange } from './exhange.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-currency-exchanger',
   templateUrl: './currency-exchanger.component.html',
   styleUrls: ['./currency-exchanger.component.scss']
 })
-export class CurrencyExchangerComponent implements OnInit {
+export class CurrencyExchangerComponent implements OnInit, OnChanges {
+  @Input() from = ''; 
+  @Input() to = ''; 
+  @Input() amount = ''; 
+  @Input() onDetailsPage = false;
   currencyList:Array<string>=[];
   currencyExchangeForm = new FormGroup({
     amount: new FormControl('null',[Validators.required]),
@@ -18,15 +23,31 @@ export class CurrencyExchangerComponent implements OnInit {
   conversionAmount:any=null;
   valueOfUnit:any='XXX';
 
-  constructor(private currencyExchangerService:CurrencyExchangerService) { }
+  constructor(private currencyExchangerService:CurrencyExchangerService, private router: Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.currencyExchangeForm.patchValue({
+      fromCurrency: this.from, 
+      toCurrency: this.to,
+      amount:this.amount
+    });
     this.getCurrencyList();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.currencyExchangeForm.patchValue({
+      fromCurrency: this.from, 
+      toCurrency: this.to,
+      amount:this.amount
+    });
   }
 
   getCurrencyList() {
     this.currencyExchangerService.getCurrencies()
-      .subscribe((data) => this.currencyList = Object.keys(data));
+      .subscribe((data) => {
+        this.currencyExchangerService.setCurrencyList(data);
+        this.currencyList = Object.keys(data);
+      });
   }
 
   getConversion(value:Exchange){
@@ -41,10 +62,12 @@ export class CurrencyExchangerComponent implements OnInit {
   }
 
   onSwapCurrency(){
-    this.currencyExchangeForm.patchValue({
-      fromCurrency: this.currencyExchangeForm.get('toCurrency')?.value, 
-      toCurrency: this.currencyExchangeForm.get('fromCurrency')?.value
-    });
+    if(!this.onDetailsPage){
+      this.currencyExchangeForm.patchValue({
+        fromCurrency: this.currencyExchangeForm.get('toCurrency')?.value, 
+        toCurrency: this.currencyExchangeForm.get('fromCurrency')?.value
+      });
+    }
   }
 
   onConvert() {
@@ -53,5 +76,9 @@ export class CurrencyExchangerComponent implements OnInit {
   }
 
   onMoreDetails(){
+    const from= this.currencyExchangeForm.value.fromCurrency;
+    const to= this.currencyExchangeForm.value.toCurrency;
+    const amount= this.currencyExchangeForm.value.amount;
+    this.router.navigate(['/details/'+from+'/'+to+'/'+amount],{relativeTo:this.route});
   }
 }

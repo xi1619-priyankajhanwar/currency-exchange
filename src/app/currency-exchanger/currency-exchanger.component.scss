@@ -5,6 +5,8 @@
     padding: 10px;
     border: 1px solid black;
     margin: 25px;
+    position: sticky;
+    top: 200px;
     .currency-exchanger{
         display: flex;
         flex-direction: column;

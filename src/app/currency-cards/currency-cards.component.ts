@@ -1,4 +1,4 @@
-import { Component, OnInit ,OnDestroy} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { CurrencyExchangerService } from '../currency-exchanger/currency-exchanger.service';
 import { Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './currency-cards.component.html',
   styleUrls: ['./currency-cards.component.scss']
 })
-export class CurrencyCardsComponent implements OnInit, OnDestroy {
+export class CurrencyCardsComponent implements OnDestroy {
   currencyData: any = {};
   subscription: Subscription;
   constructor(private currencyExchangerService:CurrencyExchangerService) {
@@ -21,11 +21,12 @@ export class CurrencyCardsComponent implements OnInit, OnDestroy {
     });
    }
 
-  ngOnInit(): void {
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  goToHome(){
+
   }
 }
 

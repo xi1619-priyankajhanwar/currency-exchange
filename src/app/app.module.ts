@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { KeysPipe } from './key-value.pipe';
 import { CurrencyCardsComponent } from './currency-cards/currency-cards.component';
+import { HomeComponent } from './home/home.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CurrencyCardsComponent } from './currency-cards/currency-cards.componen
     HeaderComponent,
     CurrencyExchangerComponent,
     CurrencyCardsComponent,
-    KeysPipe
+    KeysPipe,
+    HomeComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

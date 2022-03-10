@@ -1,0 +1,31 @@
+$color-black: #000000;
+$color-white: #ffffff;
+
+.selected-currency-info{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+padding: 15px 15px;
+position: sticky;
+top: 130px;
+    .currency-name{
+    min-width: 80px;
+    background-color: $color-black;
+    border: 1px solid $color-black;
+    color: $color-white;
+    margin: 0 5px;
+    font-size:12px;
+    padding: 5px;
+    cursor: pointer;
+    }
+    .buttons{
+    min-width: 80px;
+    background-color: $color-black;
+    border: 1px solid $color-black;
+    color: $color-white;
+    margin: 0 5px;
+    font-size:12px;
+    padding: 5px;
+    cursor: pointer;
+    }
+}
