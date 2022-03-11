@@ -4,28 +4,28 @@
         <div class="currency-exchanger">
             <div class="currency-exchanger-panel">
                 <div class="input-containers">
-                    <label for="amount">Amount</label>
+                    <label for="amount">{{AMOUNT}}</label>
                     <input id="amount" type="number" pattern="^[1-9]+[0-9]*" formControlName="amount">
                 </div>
                 <ng-container *ngIf="isDetailsPage">
                     <div class="input-containers">
-                        <label for="fromCurrency">From</label>
+                        <label for="fromCurrency">{{FROM}}</label>
                         <select id="from-currencies" formControlName="fromCurrency">
-                            <option *ngFor="let currency of currencyList" [value]="currency"  [disabled]="true">{{currency}}</option>
+                            <option *ngFor="let currency of currencyList" [value]="currency"  disabled>{{currency}}</option>
                         </select>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!isDetailsPage">
                     <div class="input-containers">
-                        <label for="fromCurrency">From</label>
+                        <label for="fromCurrency">{{FROM}}</label>
                         <select id="from-currencies" formControlName="fromCurrency"  (change)="onCurrencyChange()">
                             <option *ngFor="let currency of currencyList" [value]="currency" [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
                         </select>
                     </div>
                 </ng-container>
-                <img class="swapper" src="../../../assets/images/swap.png" height="30px" width="30px" alt="swap-icon" (click)="onSwapCurrency()"/>
+                <img class="swapper" src="../../../assets/images/swap.png" height="30px" width="30px" alt="swap-icon" (click)="onSwapCurrency()" />
                 <div class="input-containers">
-                    <label for="toCurrency">To</label>
+                    <label for="toCurrency">{{TO}}</label>
                     <select id="to-currencies" formControlName="toCurrency" (change)="onCurrencyChange()">
                         <option *ngFor="let currency of currencyList" [value]="currency" [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
                     </select>
@@ -36,9 +36,9 @@
                 <div class="valueOfUnit"> 1 {{currencyExchangeForm.value.fromCurrency}}  = {{valueOfUnit}} {{currencyExchangeForm.value.toCurrency}} </div>
             </ng-container>
             <div class="button-container">
-                <button type="submit" class="convert-btn btn-align" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}">Convert</button>
+                <button type="submit" class="convert-btn btn-align" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}">{{CONVERT}}</button>
                 <button class="convert-btn" type="button" 
-                (click)="onMoreDetails()" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}" *ngIf="!isDetailsPage">More details</button>
+                (click)="onMoreDetails()" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}" *ngIf="!isDetailsPage">{{MORE_DETAILS}}</button>
             </div>
         </div>
     </form>

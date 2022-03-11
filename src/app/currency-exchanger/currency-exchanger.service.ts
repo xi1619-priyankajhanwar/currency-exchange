@@ -1,25 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, forkJoin, Observable, Subject, throwError } from 'rxjs';
+import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { Exchange } from '../exhange.model';
+import { Constants } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyExchangerService {
   private subject = new Subject<any>();
-  ACCESS_KEY = 'af8918917ab3c7186905d1572db6057a';
+  ACCESS_KEY = Constants.AUTH_KEY;
+  _baseURL:string;
   currencyList:any={};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this._baseURL = Constants.baseURL;
+  }
 
   getCurrencies(){
-    const currencyUrl = 'https://openexchangerates.org/api/currencies.json';
+    const currencyUrl = Constants.currencyJsonURL;
     return this.http.get(currencyUrl).pipe(catchError(this.handleError));
   }
 
   getConversion(value:Exchange){
-    const currencyUrl='http://data.fixer.io/api/latest?access_key='+this.ACCESS_KEY+'&symbols='+value.fromCurrency+','+value.toCurrency+',QAR,GBP,PLN,MXN,INR,AED,JPY&format=1'
+    const currencyUrl= this._baseURL+'latest?access_key='+this.ACCESS_KEY+'&symbols='+value.fromCurrency+','+value.toCurrency+',QAR,GBP,PLN,INR,AED,AUD,JPY&format=1'
     return this.http.get(currencyUrl).pipe(catchError(this.handleError));
   }
 
@@ -43,8 +47,8 @@ export class CurrencyExchangerService {
     return this.currencyList;
   }
 
-  sendUpdatedCurrency(message: string) {
-    this.subject.next({ text: message });
+  sendUpdatedCurrency(data: any) {
+    this.subject.next({ data: data });
   }
 
   getUpdatedCurrency(): Observable<any> {

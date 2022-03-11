@@ -26,14 +26,14 @@ export class ChartsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.from=changes['from']? changes['from'].currentValue: this.from;
     this.to=changes['to']? changes['to'].currentValue: this.to;
-    // this.rerenderChart();
+    this.rerenderChart();
   }
 
   ngOnInit(): void {
     this.createSvg();
     this.drawBars(this.data);
     this.getLastDatesOfEachMonth();
-    // this.rerenderChart();
+    this.rerenderChart();
   }
 
   rerenderChart(){
@@ -42,10 +42,12 @@ export class ChartsComponent implements OnInit, OnChanges {
     this.error = '';
     this.chartService.getMonthlyDataInfo(this.days,this.from,this.to).subscribe((val:Array<CurrencyData>) => {
       const toCurrency = this.to;
+      const fromCurrency = this.from;
       for(let item of val){
         if(item.success){
-          this.rates.push(item.rates[toCurrency]);
-          this.data.push({ 'Date': item.date, 'Rate': item.rates[toCurrency] });
+          let unit:any = (item.rates[toCurrency]/item.rates[fromCurrency]).toFixed(3);
+          this.rates.push(unit);
+          this.data.push({ 'Date': item.date, 'Rate': unit });
         }else{
           if(!this.error){
             this.error = item.error.type;

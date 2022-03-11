@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Constants } from '../constants';
 import { CurrencyExchangerService } from '../currency-exchanger/currency-exchanger.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class DetailsComponent implements OnInit {
   to:string;
   amount:any=null;
   baseCurrency:string='EUR-European Union Euro';
+  BACK_TO_HOME = Constants.BACK_TO_HOME;
   constructor(private router: Router,private route: ActivatedRoute, private currencyExchangerService: CurrencyExchangerService) { }
 
   ngOnInit(): void {

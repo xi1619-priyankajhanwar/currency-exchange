@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, forkJoin, Observable, throwError } from 'rxjs';
+import { Constants } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartService {
-  ACCESS_KEY = 'af8918917ab3c7186905d1572db6057a';
+  ACCESS_KEY = Constants.AUTH_KEY;
+  baseURL = Constants.baseURL;
   constructor(private http: HttpClient) { }
 
   getMonthlyData(day:string,fromCurrency:string,toCurrency:string){
     toCurrency = toCurrency ? toCurrency : 'EUR';
-    const url= 'http://data.fixer.io/api/'+day+'?access_key='+this.ACCESS_KEY+'&base='+fromCurrency+'&symbols='+toCurrency;
+    const url= this.baseURL+day+'?access_key='+this.ACCESS_KEY+'&base=EUR&symbols='+toCurrency+','+fromCurrency;
     return this.http.get(url).pipe(catchError(this.handleError));
   }
 

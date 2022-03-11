@@ -13,3 +13,10 @@ export interface CurrencyData{
   error: any;
 }
 
+export interface ConversionList{
+  singleUnit : number,
+  conversionAmount : any,
+  baseCurrency: string,
+  toCurrency: string,
+  amount:number
+}

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CurrencyExchangerService } from './currency-exchanger.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CurrencyExchangerService', () => {
   let service: CurrencyExchangerService;

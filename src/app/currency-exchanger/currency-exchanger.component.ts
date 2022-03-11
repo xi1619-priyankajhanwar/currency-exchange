@@ -2,7 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CurrencyExchangerService } from './currency-exchanger.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Exchange } from '../exhange.model';
+import { ConversionList, Exchange } from '../exhange.model';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-currency-exchanger',
@@ -22,7 +23,11 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
   });
   conversionAmount:any=null;
   valueOfUnit:any='XXX';
-
+  AMOUNT=Constants.AMOUNT;
+  FROM=Constants.FROM; 
+  TO=Constants.TO; 
+  CONVERT=Constants.CONVERT;
+  MORE_DETAILS=Constants.MORE_DETAILS;
   constructor(private currencyExchangerService:CurrencyExchangerService, private router: Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -68,7 +73,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
           const fromCurrency = value.fromCurrency;
           this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
           this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
-          this.currencyExchangerService.sendUpdatedCurrency(data);
+          this.createCurrencyConversionList(fromCurrency,data.rates,value.amount);
         }
         else{
           alert(data.error.info);
@@ -77,8 +82,24 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
     );
   }
 
+  createCurrencyConversionList(fromCurrency:string,data:any,amount:number){
+    let conversionRates = [];
+    for(let item in data){
+      let unit:any = (data[item]/data[fromCurrency]).toFixed(3);
+      let valueOfUnits : ConversionList= {
+        singleUnit : unit,
+        conversionAmount : (unit*amount).toFixed(3),
+        baseCurrency: fromCurrency,
+        toCurrency: item,
+        amount:amount
+      }
+      conversionRates.push(valueOfUnits);
+    }
+    this.currencyExchangerService.sendUpdatedCurrency(conversionRates);
+  }
+
   onSwapCurrency(){
-    if(!this.isDetailsPage){
+    if(!this.isDetailsPage && this.currencyExchangeForm.valid){
       this.currencyExchangeForm.patchValue({
         fromCurrency: this.currencyExchangeForm.get('toCurrency')?.value, 
         toCurrency: this.currencyExchangeForm.get('fromCurrency')?.value
