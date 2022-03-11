@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Exchange } from './exhange.model';
-import { Observable, Subject } from 'rxjs';
+import { catchError, concatMap, forkJoin, Observable, of, Subject, switchMap, throwError } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,12 +15,20 @@ export class CurrencyExchangerService {
   currencyList:any;
   getCurrencies(){
     const currencyUrl = 'https://openexchangerates.org/api/currencies.json';
-    return this.http.get(currencyUrl);
+    return this.http.get(currencyUrl).pipe(catchError(this.handleError));
   }
 
   getConversion(value:Exchange){
     const currencyUrl='http://data.fixer.io/api/latest?access_key='+this.ACCESS_KEY+'&symbols='+value.fromCurrency+','+value.toCurrency+',QAR,GBP,PLN,MXN,INR,AED,JPY&format=1'
-    return this.http.get(currencyUrl);
+    return this.http.get(currencyUrl).pipe(catchError(this.handleError));
+  }
+
+  handleError() {
+    let errorMessage = 'Error occured';
+    console.log(errorMessage);
+    return throwError(() => {
+      return errorMessage;
+    });
   }
 
   getCurrencyName(currencyCode:string){
@@ -38,4 +47,26 @@ export class CurrencyExchangerService {
       return this.subject.asObservable();
   }
 
+  getMonthlyData(day:string){
+    const to = 'EUR';
+    const date = 'YYYY-MM-DD';
+    const url ='';
+    // const url= 'http://data.fixer.io/api/'+day+'?access_key='+this.ACCESS_KEY+'&base='+to+'&symbols=USD';
+    return this.http.get(url).pipe(catchError(this.handleError));
+  
+  }
+
+  getMonthlyDataInfo(days:Array<string>){
+    const to = 'EUR';
+    const date = 'YYYY-MM-DD';
+    const addressArray$: Observable<any>[] = [];
+    days.forEach(day => {
+      const address$: Observable<any> = this.getMonthlyData(day);
+      addressArray$.push(address$);
+    });
+    // [Observable<Address>, Observable<Address>, ....., Observable<Address>]
+    return forkJoin(addressArray$);
+
+  
+  }
 } 

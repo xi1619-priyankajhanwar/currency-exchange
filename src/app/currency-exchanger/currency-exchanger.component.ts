@@ -31,7 +31,12 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       toCurrency: this.to,
       amount:this.amount
     });
-    this.getCurrencyList();
+    if(this.currencyList.length === 0){
+      this.getCurrencyList();
+    }
+    if(this.onDetailsPage){
+      this.onConvert();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -58,7 +63,11 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
       this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
       this.currencyExchangerService.sendUpdatedCurrency(data);
-    });
+    },
+    // error => {
+    //     console.log(error);
+    // }
+    );
   }
 
   onSwapCurrency(){

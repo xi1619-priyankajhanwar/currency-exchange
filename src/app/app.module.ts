@@ -11,6 +11,7 @@ import { KeysPipe } from './key-value.pipe';
 import { CurrencyCardsComponent } from './currency-cards/currency-cards.component';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DetailsComponent } from './details/details.component';
     CurrencyCardsComponent,
     KeysPipe,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
