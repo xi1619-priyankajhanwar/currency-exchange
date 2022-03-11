@@ -12,7 +12,7 @@ export class CurrencyExchangerService {
   constructor(private http: HttpClient) { }
 
   ACCESS_KEY = '09ac9b62827e512d92d1108a1c75126e';
-  currencyList:any;
+  currencyList:any={};
   getCurrencies(){
     const currencyUrl = 'https://openexchangerates.org/api/currencies.json';
     return this.http.get(currencyUrl).pipe(catchError(this.handleError));
@@ -37,6 +37,9 @@ export class CurrencyExchangerService {
 
   setCurrencyList(list:Object){
     this.currencyList = list;
+  }
+  getCurrencyList(){
+    return this.currencyList;
   }
 
   sendUpdatedCurrency(message: string) {
@@ -64,9 +67,6 @@ export class CurrencyExchangerService {
       const address$: Observable<any> = this.getMonthlyData(day);
       addressArray$.push(address$);
     });
-    // [Observable<Address>, Observable<Address>, ....., Observable<Address>]
     return forkJoin(addressArray$);
-
-  
   }
 } 

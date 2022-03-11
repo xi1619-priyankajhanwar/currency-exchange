@@ -3,10 +3,8 @@
     border-radius: 25px;
     min-height: 100px;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid darkblue;
     margin: 25px;
-    position: sticky;
-    top: 200px;
     .currency-exchanger{
         display: flex;
         flex-direction: column;
@@ -20,7 +18,8 @@
             flex-direction: column;
         }
         .disabled{
-            background-color: gray !important;
+            background-color: white !important;
+            color:darkblue !important;
         }
         input{
             font-size: 16px;
@@ -34,12 +33,12 @@
         }
         .convert-btn{
             color:#ffffff;
-            background-color: black;
+            background-color: darkblue;
             border-radius: 4px;
             cursor: pointer;
             height: 40px;
             min-width: 150px;
-            border: 1px solid black;
+            border: 1px solid darkblue;
             margin-top: 10px;
         }
         .valueOfUnit{
@@ -114,5 +113,19 @@
     }
     .btn-align{
         margin-right: 0px;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    // .currency-exchanger-container{
+    //     position: sticky;
+    //     top: 200px;
+    // }
+}
+@media only screen and (min-width: 600px) {
+    .currency-exchanger-container{
+        // position: sticky;
+        // top: 200px;
     }
 }

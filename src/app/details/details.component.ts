@@ -8,8 +8,8 @@ import { CurrencyExchangerService } from '../currency-exchanger/currency-exchang
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  from: any;
-  to:any;
+  from: string;
+  to:string;
   amount:any=null;
   baseCurrency:string='EUR-European Union Euro';
   constructor(private router: Router,private route: ActivatedRoute, private currencyExchangerService: CurrencyExchangerService) { }

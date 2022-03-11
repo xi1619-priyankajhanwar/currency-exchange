@@ -31,9 +31,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       toCurrency: this.to,
       amount:this.amount
     });
-    if(this.currencyList.length === 0){
-      this.getCurrencyList();
-    }
+    this.getCurrencyList();
     if(this.onDetailsPage){
       this.onConvert();
     }
@@ -48,25 +46,25 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
   }
 
   getCurrencyList() {
-    this.currencyExchangerService.getCurrencies()
+    this.currencyList = Object.keys(this.currencyExchangerService.getCurrencyList());
+    if(Object.keys(this.currencyList).length === 0){
+      this.currencyExchangerService.getCurrencies()
       .subscribe((data) => {
         this.currencyExchangerService.setCurrencyList(data);
         this.currencyList = Object.keys(data);
       });
+    }
   }
 
   getConversion(value:Exchange){
     this.currencyExchangerService.getConversion(value)
-    .subscribe((data:any) => {
-      const toCurrency = value.toCurrency;
-      const fromCurrency = value.fromCurrency;
-      this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
-      this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
-      this.currencyExchangerService.sendUpdatedCurrency(data);
-    },
-    // error => {
-    //     console.log(error);
-    // }
+      .subscribe((data:any) => {
+        const toCurrency = value.toCurrency;
+        const fromCurrency = value.fromCurrency;
+        this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
+        this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
+        this.currencyExchangerService.sendUpdatedCurrency(data);
+      }
     );
   }
 

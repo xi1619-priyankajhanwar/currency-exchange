@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { concatMap, forkJoin, from } from 'rxjs';
 import { CurrencyExchangerService } from '../currency-exchanger/currency-exchanger.service';
 import { CurrencyData } from '../currency-exchanger/exhange.model';
 
@@ -10,20 +9,7 @@ import { CurrencyData } from '../currency-exchanger/exhange.model';
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent implements OnInit {
-  private data :Array<Object>= [
-    // {"Framework": "Jan", "Stars": "6", "Released": "2014"},
-    // {"Framework": "Feb", "Stars": "5", "Released": "2013"},
-    // {"Framework": "March", "Stars": "6", "Released": "2016"},
-    // {"Framework": "April", "Stars": "2", "Released": "2010"},
-    // {"Framework": "May", "Stars": "4", "Released": "2011"},
-    // {"Framework": "June", "Stars": "7", "Released": "2014"},
-    // {"Framework": "July", "Stars": "8", "Released": "2013"},
-    // {"Framework": "August", "Stars": "1", "Released": "2016"},
-    // {"Framework": "September", "Stars": "2", "Released": "2010"},
-    // {"Framework": "October", "Stars": "7", "Released": "2011"},
-    // {"Framework": "November", "Stars": "9", "Released": "2010"},
-    // {"Framework": "December", "Stars": "1", "Released": "2011"}
-  ];
+  private data :Array<Object>= [];
   private svg:any;
   private margin = 50;
   private width = 750 - (this.margin * 2);
@@ -35,16 +21,8 @@ export class ChartsComponent implements OnInit {
     this.createSvg();
     this.drawBars(this.data);
     this.getLastDates();
-    // this.data = [];
-    // from(this.days).pipe(
-    //   concatMap(param => this.currencyExchangerService.getMonthlyData(param))
-    // ).subscribe((val:any) => {
-    //   this.data.push({ 'Date': val.date, 'Rate': val.rates.USD });
-    //   this.drawBars(this.data);
-    // });
     this.data = [];
-    this.currencyExchangerService.getMonthlyDataInfo(this.days).subscribe((val:any) => {
-      console.log(val);
+    this.currencyExchangerService.getMonthlyDataInfo(this.days).subscribe((val:Array<CurrencyData>) => {
       for(let item of val){
         this.data.push({ 'Date': item.date, 'Rate': item.rates.USD });
       }
@@ -58,7 +36,6 @@ export class ChartsComponent implements OnInit {
     return previousYear;
   }
 
-  // program to check leap year
   checkLeapYear(year:number) {
   const leap = new Date(year, 1, 29).getDate() === 29;
     if (leap) {
@@ -111,7 +88,7 @@ export class ChartsComponent implements OnInit {
 
     // Create the Y-axis band scale
     const y = d3.scaleLinear()
-    .domain([0, 10])
+    .domain([0, 0.05])
     .range([this.height, 0]);
 
     // Draw the Y-axis on the DOM
@@ -128,7 +105,7 @@ export class ChartsComponent implements OnInit {
     .attr("width", x.bandwidth())
     .attr("height", (d: { Rate: d3.NumberValue; }) => this.height - y(d.Rate))
     .attr("fill", "#d04a35");
-}
+  }
 
 }
 

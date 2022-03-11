@@ -25,9 +25,6 @@ export class CurrencyCardsComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  goToHome(){
-
-  }
 }
 
 

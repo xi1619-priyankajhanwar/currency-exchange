@@ -8,24 +8,54 @@ justify-content: space-between;
 padding: 15px 15px;
 position: sticky;
 top: 130px;
+background-color: darkblue;
     .currency-name{
-    min-width: 80px;
-    background-color: $color-black;
-    border: 1px solid $color-black;
-    color: $color-white;
-    margin: 0 5px;
-    font-size:12px;
-    padding: 5px;
-    cursor: pointer;
+        min-width: 80px;
+        // background-color: $color-black;
+        // border: 1px solid $color-black;
+        color: $color-white;
+        margin: 0 5px;
+        font-size:12px;
+        padding: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        background-color: darkblue;
+        border: 1px solid $color-white;
     }
     .buttons{
     min-width: 80px;
-    background-color: $color-black;
-    border: 1px solid $color-black;
+    // background-color: $color-black;
+    // border: 1px solid $color-black;
     color: $color-white;
     margin: 0 5px;
     font-size:12px;
     padding: 5px;
     cursor: pointer;
+    background-color: darkblue;
+    border: 1px solid $color-white;
+    }
+    .charts-container{
+        display: flex;
+        max-height: 100px;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .charts-container{
+        display: flex;
+        max-height: 100px;
+        transform: scale(0.8);
+        justify-content: center;
+        // margin-top: -15px;
+        // margin-left: -113px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .charts-container{
+        display: flex;
+        max-height: 100px;
+        transform: scale(0.4);
+        justify-content: center;
+        // margin-top: -15px;
+        // margin-left: -113px;
     }
 }
