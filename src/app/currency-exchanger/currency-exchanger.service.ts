@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Exchange } from './exhange.model';
 import { catchError, forkJoin, Observable, Subject, throwError } from 'rxjs';
+import { Exchange } from '../exhange.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,20 +50,5 @@ export class CurrencyExchangerService {
 
   getUpdatedCurrency(): Observable<any> {
     return this.subject.asObservable();
-  }
-
-  getMonthlyData(day:string,fromCurrency:string,toCurrency:string){
-    toCurrency = toCurrency ? toCurrency : 'EUR';
-    const url= 'http://data.fixer.io/api/'+day+'?access_key='+this.ACCESS_KEY+'&base='+fromCurrency+'&symbols='+toCurrency;
-    return this.http.get(url).pipe(catchError(this.handleError));
-  }
-
-  getMonthlyDataInfo(days:Array<string>,from:string,to:string){
-    const monthlyData$: Observable<any>[] = [];
-    days.forEach(day => {
-      const data$: Observable<any> = this.getMonthlyData(day,from,to);
-      monthlyData$.push(data$);
-    });
-    return forkJoin(monthlyData$);
   }
 } 

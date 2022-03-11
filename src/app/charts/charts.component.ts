@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
-import { CurrencyExchangerService } from '../currency-exchanger/currency-exchanger.service';
-import { CurrencyData } from '../currency-exchanger/exhange.model';
+import { CurrencyData } from '../exhange.model';
+import { ChartService } from './chart.service';
 
 @Component({
   selector: 'app-charts',
@@ -21,7 +21,7 @@ export class ChartsComponent implements OnInit, OnChanges {
   minimumRate:any=0;
   maximumRate:any=0;
   days:Array<string>=[];
-  constructor(private currencyExchangerService:CurrencyExchangerService) { }
+  constructor(private chartService:ChartService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.from=changes['from']? changes['from'].currentValue: this.from;
@@ -40,7 +40,7 @@ export class ChartsComponent implements OnInit, OnChanges {
     this.data = [];
     this.rates = [];
     this.error = '';
-    this.currencyExchangerService.getMonthlyDataInfo(this.days,this.from,this.to).subscribe((val:Array<CurrencyData>) => {
+    this.chartService.getMonthlyDataInfo(this.days,this.from,this.to).subscribe((val:Array<CurrencyData>) => {
       const toCurrency = this.to;
       for(let item of val){
         if(item.success){

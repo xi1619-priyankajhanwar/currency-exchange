@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CurrencyExchangerService } from './currency-exchanger.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Exchange } from './exhange.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Exchange } from '../exhange.model';
 
 @Component({
   selector: 'app-currency-exchanger',

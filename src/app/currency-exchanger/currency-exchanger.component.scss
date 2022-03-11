@@ -69,19 +69,26 @@ $darkblue: darkblue;
 }
 
 
-
 @media only screen and (min-width: 600px) {
     .charts-container{
         display: flex;
-        max-height: 100px;
+        max-height: 450px;
         transform: scale(0.8);
         justify-content: center;
+    }
+    .currency-exchanger-container{
+        position:sticky;
+        top:200px;
+    }
+    .charts{
+        max-height: 450px;
+        overflow-y: scroll;
     }
 }
 @media only screen and (max-width: 600px) {
     .charts-container{
         display: flex;
-        max-height: 100px;
+        min-height: 100px;
         transform: scale(0.4);
         justify-content: center;
     }

@@ -43,7 +43,7 @@
         </div>
     </form>
 </div>
-<div *ngIf="onDetailsPage">
+<div *ngIf="onDetailsPage" class="charts">
     <h1 class="units-selected">{{from}} to {{to}}</h1>
     <app-charts class="charts-container" [from]="from" [to]="to"></app-charts>
 </div>
