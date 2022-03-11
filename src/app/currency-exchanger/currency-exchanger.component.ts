@@ -49,6 +49,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       amount:this.amount
     });
   }
+  
   onCurrencyChange(){
     this.from=this.currencyExchangeForm.value.fromCurrency;
     this.to=this.currencyExchangeForm.value.toCurrency;
@@ -82,6 +83,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
     );
   }
 
+  // format data for currency conversion used in cards component
   createCurrencyConversionList(fromCurrency:string,data:any,amount:number){
     let conversionRates = [];
     for(let item in data){

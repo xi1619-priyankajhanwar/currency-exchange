@@ -10,5 +10,6 @@ export class Constants {
     public static MORE_DETAILS ='More Details';
     public static baseURL = 'http://data.fixer.io/api/';
     public static currencyJsonURL = 'https://openexchangerates.org/api/currencies.json';
+    public static unableToFetch = 'Unable to fetch data';
 }
  

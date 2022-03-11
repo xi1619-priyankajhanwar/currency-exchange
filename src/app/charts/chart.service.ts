@@ -11,12 +11,14 @@ export class ChartService {
   baseURL = Constants.baseURL;
   constructor(private http: HttpClient) { }
 
+  // method for service call to get historic data for particular date
   getMonthlyData(day:string,fromCurrency:string,toCurrency:string){
     toCurrency = toCurrency ? toCurrency : 'EUR';
     const url= this.baseURL+day+'?access_key='+this.ACCESS_KEY+'&base=EUR&symbols='+toCurrency+','+fromCurrency;
     return this.http.get(url).pipe(catchError(this.handleError));
   }
 
+  // method to get historic data for array of dates i.e all months of previous year
   getMonthlyDataInfo(days:Array<string>,from:string,to:string){
     const monthlyData$: Observable<any>[] = [];
     days.forEach(day => {

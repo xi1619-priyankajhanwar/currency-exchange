@@ -36,6 +36,7 @@ export class ChartsComponent implements OnInit, OnChanges {
     this.rerenderChart();
   }
 
+  // rerender chart on change of TO and FROM currency 
   rerenderChart(){
     this.data = [];
     this.rates = [];

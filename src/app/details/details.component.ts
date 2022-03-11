@@ -21,13 +21,15 @@ export class DetailsComponent implements OnInit {
       this.from = params['from'];
       this.to = params['to'];
       this.amount = params['amount'];
-      this.baseCurrency = this.from === 'EUR' ? 'EUR-European Union Euro' : this.getBaseCurrency();
+      this.baseCurrency = this.from === 'EUR' ? 'EUR-European Union Euro' : this.getBaseCurrency(this.from);
     });
   }
 
-  getBaseCurrency(){
-    return this.currencyExchangerService.getCurrencyName(this.from);
+  // get currency name based on code value
+  getBaseCurrency(code:string){
+    return this.currencyExchangerService.getCurrencyName(code);
   }
+  
   goToHome(){
     this.router.navigate(['/']);
   }
