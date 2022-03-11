@@ -7,10 +7,8 @@ export interface CurrencyData{
   base: string;
   date: Date;
   historical: boolean;
-  rates: Rates;
+  rates: any;
   success: boolean;
   timestamp: string;
 }
-export interface Rates {
-  USD: string;
-}
+

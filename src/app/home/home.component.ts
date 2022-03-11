@@ -9,6 +9,5 @@ export class HomeComponent {
   from:string='EUR';
   to:string='USD';
   amount:any=null;
-  constructor() { }
-
+  constructor() {}
 }

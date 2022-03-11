@@ -18,7 +18,7 @@
                 <ng-container *ngIf="!onDetailsPage">
                     <div class="input-containers">
                         <label for="fromCurrency">From</label>
-                        <select id="from-currencies" formControlName="fromCurrency">
+                        <select id="from-currencies" formControlName="fromCurrency"  (change)="onCurrencyChange()">
                             <option *ngFor="let currency of currencyList" [value]="currency" [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
                         </select>
                     </div>
@@ -26,7 +26,7 @@
                 <img class="swapper" src="../../../assets/images/swap.png" height="30px" width="30px" alt="swap-icon" (click)="onSwapCurrency()"/>
                 <div class="input-containers">
                     <label for="toCurrency">To</label>
-                    <select id="to-currencies" formControlName="toCurrency">
+                    <select id="to-currencies" formControlName="toCurrency" (change)="onCurrencyChange()">
                         <option *ngFor="let currency of currencyList" [value]="currency" [disabled]="currencyExchangeForm.status === 'INVALID'">{{currency}}</option>
                     </select>
                 </div>
@@ -42,5 +42,9 @@
             </div>
         </div>
     </form>
+</div>
+<div *ngIf="onDetailsPage">
+    <h1 class="units-selected">{{from}} to {{to}}</h1>
+    <app-charts class="charts-container" [from]="from" [to]="to"></app-charts>
 </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { CurrencyExchangerService } from '../currency-exchanger/currency-exchanger.service';
 import { CurrencyData } from '../currency-exchanger/exhange.model';
@@ -8,24 +8,46 @@ import { CurrencyData } from '../currency-exchanger/exhange.model';
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, OnChanges {
+  @Input() from = ''; 
+  @Input() to = ''; 
   private data :Array<Object>= [];
+  private rates :Array<any>= [];
   private svg:any;
   private margin = 50;
   private width = 750 - (this.margin * 2);
   private height = 400 - (this.margin * 2);
+  minimumRate:any=0;
+  maximumRate:any=0;
   days:Array<string>=[];
   constructor(private currencyExchangerService:CurrencyExchangerService) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.from=changes['from']? changes['from'].currentValue: this.from;
+    this.to=changes['to']? changes['to'].currentValue: this.to;
+    this.rerenderChart();
+  }
 
   ngOnInit(): void {
     this.createSvg();
     this.drawBars(this.data);
-    this.getLastDates();
+    this.getLastDatesOfEachMonth();
+    this.rerenderChart();
+  }
+
+  rerenderChart(){
     this.data = [];
-    this.currencyExchangerService.getMonthlyDataInfo(this.days).subscribe((val:Array<CurrencyData>) => {
+    this.rates = [];
+    this.currencyExchangerService.getMonthlyDataInfo(this.days,this.from,this.to).subscribe((val:Array<CurrencyData>) => {
+      const toCurrency = this.to;
       for(let item of val){
-        this.data.push({ 'Date': item.date, 'Rate': item.rates.USD });
+        if(item.success){
+          this.rates.push(item.rates[toCurrency]);
+          this.data.push({ 'Date': item.date, 'Rate': item.rates[toCurrency] });
+        }
       }
+      this.minimumRate = Math.min(...this.rates);
+      this.maximumRate = Math.max(...this.rates);
       this.drawBars(this.data);
     });
   }
@@ -37,7 +59,7 @@ export class ChartsComponent implements OnInit {
   }
 
   checkLeapYear(year:number) {
-  const leap = new Date(year, 1, 29).getDate() === 29;
+    const leap = new Date(year, 1, 29).getDate() === 29;
     if (leap) {
         return true;
     } else {
@@ -45,21 +67,13 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  getLastDates(){
+  getLastDatesOfEachMonth(){
     const previousYear = this.getPreviousYear();
-    this.days.push(previousYear+'-01-31');
-    let feb = this.checkLeapYear(previousYear) ? previousYear+'-02-29' : previousYear+'-02-28';
-    this.days.push(feb);
-    // this.days.push(previousYear+'-03-31');
-    // this.days.push(previousYear+'-04-30');
-    // this.days.push(previousYear+'-05-31');
-    // this.days.push(previousYear+'-06-30');
-    // this.days.push(previousYear+'-07-31');
-    // this.days.push(previousYear+'-08-31');
-    // this.days.push(previousYear+'-09-30');
-    // this.days.push(previousYear+'-10-31');
-    // this.days.push(previousYear+'-11-30');
-    // this.days.push(previousYear+'-12-31');
+    let lastDates:Array<string> = ['-01-31','-02-28','-03-31','-04-30','-05-31','-06-30','-07-31','-08-31','-09-30','-10-31','-11-30','-12-31'];
+    for(let date in lastDates){
+      this.days.push(previousYear+lastDates[date]);
+    }
+    this.days[1] = this.checkLeapYear(previousYear) ? previousYear+'-02-29' : previousYear+'-02-28';
   }
 
 
@@ -88,7 +102,7 @@ export class ChartsComponent implements OnInit {
 
     // Create the Y-axis band scale
     const y = d3.scaleLinear()
-    .domain([0, 0.05])
+    .domain([this.minimumRate, this.maximumRate])
     .range([this.height, 0]);
 
     // Draw the Y-axis on the DOM

@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./currency-cards.component.scss']
 })
 export class CurrencyCardsComponent implements OnDestroy {
+
   currencyData: any = {};
   subscription: Subscription;
   constructor(private currencyExchangerService:CurrencyExchangerService) {
@@ -19,8 +20,8 @@ export class CurrencyCardsComponent implements OnDestroy {
         this.currencyData = {};
       }
     });
-   }
-
+  }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

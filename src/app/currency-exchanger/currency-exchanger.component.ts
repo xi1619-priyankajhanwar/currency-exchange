@@ -44,6 +44,10 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       amount:this.amount
     });
   }
+  onCurrencyChange(){
+    this.from=this.currencyExchangeForm.value.fromCurrency;
+    this.to=this.currencyExchangeForm.value.toCurrency;
+  }
 
   getCurrencyList() {
     this.currencyList = Object.keys(this.currencyExchangerService.getCurrencyList());
@@ -59,11 +63,16 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
   getConversion(value:Exchange){
     this.currencyExchangerService.getConversion(value)
       .subscribe((data:any) => {
-        const toCurrency = value.toCurrency;
-        const fromCurrency = value.fromCurrency;
-        this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
-        this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
-        this.currencyExchangerService.sendUpdatedCurrency(data);
+        if(data.success){
+          const toCurrency = value.toCurrency;
+          const fromCurrency = value.fromCurrency;
+          this.valueOfUnit = (data.rates[toCurrency]/data.rates[fromCurrency]).toFixed(3);
+          this.conversionAmount = (this.valueOfUnit*(value.amount)).toFixed(3);
+          this.currencyExchangerService.sendUpdatedCurrency(data);
+        }
+        else{
+          alert(data.error.info);
+        }
       }
     );
   }

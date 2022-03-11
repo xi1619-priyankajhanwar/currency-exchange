@@ -1,6 +1,6 @@
 $color-black: #000000;
 $color-white: #ffffff;
-
+$darkblue: darkblue;
 .header-container{
   display: flex;
   flex-direction: row;
@@ -9,8 +9,7 @@ $color-white: #ffffff;
   border: 1px solid $color-black;
   position: sticky;
   top: 10px;
-  // background-color: gray;
-  background-color: darkblue;
+  background-color: $darkblue;
   .logo{
     margin: 25px 0px;
     cursor: pointer;
@@ -24,9 +23,7 @@ $color-white: #ffffff;
   }
   .buttons{
     min-width: 80px;
-    // background-color: $color-black;
-    background-color: darkblue;
-    // border: 1px solid $color-black;
+    background-color: $darkblue;
     border: 1px solid $color-white;
     color: $color-white;
     margin: 0 5px;
