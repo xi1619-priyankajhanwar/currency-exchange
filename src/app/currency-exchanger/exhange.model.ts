@@ -10,5 +10,6 @@ export interface CurrencyData{
   rates: any;
   success: boolean;
   timestamp: string;
+  error: any;
 }
 

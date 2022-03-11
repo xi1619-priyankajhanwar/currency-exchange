@@ -19,6 +19,7 @@ $darkblue: darkblue;
         .input-containers{
             display: flex;
             flex-direction: column;
+            margin-right: 10px;
         }
         .disabled{
             background-color: $color-white !important;
@@ -101,7 +102,7 @@ $darkblue: darkblue;
         height: 25px;
     }
     select{
-        min-width: 200px;
+        min-width: 222px;
         height: 50px;
     }
     .convert-btn{
@@ -135,6 +136,7 @@ $darkblue: darkblue;
     }
     .input-containers{
         margin-top: 10px;
+        margin-right: 0px !important;
     }
     .button-container{
         display: flex;

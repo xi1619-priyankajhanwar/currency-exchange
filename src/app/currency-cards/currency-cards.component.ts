@@ -13,11 +13,11 @@ export class CurrencyCardsComponent implements OnDestroy {
   subscription: Subscription;
   constructor(private currencyExchangerService:CurrencyExchangerService) {
     this.subscription = this.currencyExchangerService.getUpdatedCurrency().subscribe(data => {
-      if (data) {
+      if (data.text.success) {
         this.currencyData=data.text.rates;
-        console.log(this.currencyData);
       } else {
         this.currencyData = {};
+        alert("Unable to fetch data");
       }
     });
   }

@@ -17,6 +17,7 @@ export class ChartsComponent implements OnInit, OnChanges {
   private margin = 50;
   private width = 750 - (this.margin * 2);
   private height = 400 - (this.margin * 2);
+  error:string='';
   minimumRate:any=0;
   maximumRate:any=0;
   days:Array<string>=[];
@@ -38,12 +39,18 @@ export class ChartsComponent implements OnInit, OnChanges {
   rerenderChart(){
     this.data = [];
     this.rates = [];
+    this.error = '';
     this.currencyExchangerService.getMonthlyDataInfo(this.days,this.from,this.to).subscribe((val:Array<CurrencyData>) => {
       const toCurrency = this.to;
       for(let item of val){
         if(item.success){
           this.rates.push(item.rates[toCurrency]);
           this.data.push({ 'Date': item.date, 'Rate': item.rates[toCurrency] });
+        }else{
+          if(!this.error){
+            this.error = item.error.type;
+            alert(this.error);
+          }
         }
       }
       this.minimumRate = Math.min(...this.rates);

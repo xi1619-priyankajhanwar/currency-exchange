@@ -8,7 +8,8 @@ import { catchError, forkJoin, Observable, Subject, throwError } from 'rxjs';
 })
 export class CurrencyExchangerService {
   private subject = new Subject<any>();
-  ACCESS_KEY = '09ac9b62827e512d92d1108a1c75126e';
+  ACCESS_KEY = '22bc734a65cdc47169a9d395920b02b7';
+  // ACCESS_KEY = 'af8918917ab3c7186905d1572db6057a';
   currencyList:any={};
 
   constructor(private http: HttpClient) { }
