@@ -6,8 +6,7 @@ import { catchError, forkJoin, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ChartService {
-  ACCESS_KEY = '22bc734a65cdc47169a9d395920b02b7';
-  // ACCESS_KEY = 'af8918917ab3c7186905d1572db6057a';
+  ACCESS_KEY = 'af8918917ab3c7186905d1572db6057a';
   constructor(private http: HttpClient) { }
 
   getMonthlyData(day:string,fromCurrency:string,toCurrency:string){
