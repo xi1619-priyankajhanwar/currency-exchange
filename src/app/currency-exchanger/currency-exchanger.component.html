@@ -7,7 +7,7 @@
                     <label for="amount">Amount</label>
                     <input id="amount" type="number" pattern="^[1-9]+[0-9]*" formControlName="amount">
                 </div>
-                <ng-container *ngIf="onDetailsPage">
+                <ng-container *ngIf="isDetailsPage">
                     <div class="input-containers">
                         <label for="fromCurrency">From</label>
                         <select id="from-currencies" formControlName="fromCurrency">
@@ -15,7 +15,7 @@
                         </select>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="!onDetailsPage">
+                <ng-container *ngIf="!isDetailsPage">
                     <div class="input-containers">
                         <label for="fromCurrency">From</label>
                         <select id="from-currencies" formControlName="fromCurrency"  (change)="onCurrencyChange()">
@@ -38,12 +38,12 @@
             <div class="button-container">
                 <button type="submit" class="convert-btn btn-align" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}">Convert</button>
                 <button class="convert-btn" type="button" 
-                (click)="onMoreDetails()" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}" *ngIf="!onDetailsPage">More details</button>
+                (click)="onMoreDetails()" [disabled]="currencyExchangeForm.status === 'INVALID'" [ngClass]="{'disabled': currencyExchangeForm.status === 'INVALID'}" *ngIf="!isDetailsPage">More details</button>
             </div>
         </div>
     </form>
 </div>
-<div *ngIf="onDetailsPage" class="charts">
+<div *ngIf="isDetailsPage" class="charts">
     <h1 class="units-selected">{{from}} to {{to}}</h1>
     <app-charts class="charts-container" [from]="from" [to]="to"></app-charts>
 </div>

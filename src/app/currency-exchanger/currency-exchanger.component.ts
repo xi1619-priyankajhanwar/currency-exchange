@@ -13,7 +13,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
   @Input() from = ''; 
   @Input() to = ''; 
   @Input() amount = ''; 
-  @Input() onDetailsPage = false;
+  @Input() isDetailsPage = false;
   currencyList:Array<string>=[];
   currencyExchangeForm = new FormGroup({
     amount: new FormControl('null',[Validators.required]),
@@ -32,7 +32,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
       amount:this.amount
     });
     this.getCurrencyList();
-    if(this.onDetailsPage){
+    if(this.isDetailsPage){
       this.onConvert();
     }
   }
@@ -78,7 +78,7 @@ export class CurrencyExchangerComponent implements OnInit, OnChanges {
   }
 
   onSwapCurrency(){
-    if(!this.onDetailsPage){
+    if(!this.isDetailsPage){
       this.currencyExchangeForm.patchValue({
         fromCurrency: this.currencyExchangeForm.get('toCurrency')?.value, 
         toCurrency: this.currencyExchangeForm.get('fromCurrency')?.value

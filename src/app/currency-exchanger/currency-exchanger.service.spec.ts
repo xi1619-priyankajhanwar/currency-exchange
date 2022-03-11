@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CurrencyExchangerService } from './currency-exchanger.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('CurrencyExchangerService', () => {
   let service: CurrencyExchangerService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule], 
+      providers: [CurrencyExchangerService]
+    });
     service = TestBed.inject(CurrencyExchangerService);
   });
 

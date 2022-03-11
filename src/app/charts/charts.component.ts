@@ -26,14 +26,14 @@ export class ChartsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.from=changes['from']? changes['from'].currentValue: this.from;
     this.to=changes['to']? changes['to'].currentValue: this.to;
-    this.rerenderChart();
+    // this.rerenderChart();
   }
 
   ngOnInit(): void {
     this.createSvg();
     this.drawBars(this.data);
     this.getLastDatesOfEachMonth();
-    this.rerenderChart();
+    // this.rerenderChart();
   }
 
   rerenderChart(){

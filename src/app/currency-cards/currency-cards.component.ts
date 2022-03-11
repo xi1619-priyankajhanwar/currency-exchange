@@ -12,18 +12,18 @@ export class CurrencyCardsComponent implements OnDestroy {
   currencyData: any = {};
   subscription: Subscription;
   constructor(private currencyExchangerService:CurrencyExchangerService) {
-    this.subscription = this.currencyExchangerService.getUpdatedCurrency().subscribe(data => {
-      if (data.text.success) {
-        this.currencyData=data.text.rates;
-      } else {
-        this.currencyData = {};
-        alert("Unable to fetch data");
-      }
-    });
+    // this.subscription = this.currencyExchangerService.getUpdatedCurrency().subscribe(data => {
+    //   if (data.text.success) {
+    //     this.currencyData=data.text.rates;
+    //   } else {
+    //     this.currencyData = {};
+    //     alert("Unable to fetch data");
+    //   }
+    // });
   }
   
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 }
